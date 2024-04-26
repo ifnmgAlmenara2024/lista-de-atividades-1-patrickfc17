@@ -1,5 +1,4 @@
 const moedasSuportadas = ['BRL', 'USD', 'EUR', 'GBP'];
-
 const taxas = {
   BRL: 1,
   USD: 5.5,
@@ -20,7 +19,8 @@ function assertIsMoedaValida(valor) {
 
 const moedaOrigem = window
   .prompt('Digite o valor de origem (Ex.: BRL 27.99): ')
-  ?.split(' ');
+  ?.trim()
+  .split(' ');
 
 if (!moedaOrigem || moedaOrigem.length !== 2) {
   window.alert('Valor inválido');
@@ -37,7 +37,9 @@ if (isNaN(valorDecimal)) {
   throw new Error();
 }
 
-const moedaDestino = window.prompt('Digite a moeda de destino (Ex.: USD): ');
+const moedaDestino = window
+  .prompt('Digite a moeda de destino (Ex.: USD): ')
+  ?.trim();
 
 assertIsMoedaValida(moedaDestino);
 
