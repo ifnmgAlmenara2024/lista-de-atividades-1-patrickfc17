@@ -1,11 +1,11 @@
 const moedasSuportadas = ['BRL', 'USD', 'EUR', 'GBP'] as const;
 
-type MoedaEnum = (typeof moedasSuportadas)[number];
+type MoedasSuportadas = (typeof moedasSuportadas)[number];
 type TaxasRegiao = {
-  [k in MoedaEnum]: number;
+  [k in MoedasSuportadas]: number;
 };
 type Taxas = {
-  [k in MoedaEnum]: TaxasRegiao;
+  [k in MoedasSuportadas]: TaxasRegiao;
 }
 
 const taxasBrasil = {
@@ -43,7 +43,7 @@ const taxas = {
   GBP: taxasReinoUnido
 } satisfies Taxas;
 
-function assertIsMoedaValida(valor: unknown): asserts valor is MoedaEnum {
+function assertIsMoedaValida(valor: unknown): asserts valor is MoedasSuportadas {
   if (
     !valor ||
     typeof valor !== 'string' ||
