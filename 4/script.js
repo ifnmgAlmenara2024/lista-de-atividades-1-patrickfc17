@@ -1,54 +1,63 @@
 const moedasSuportadas = ['BRL', 'USD', 'EUR', 'GBP'];
-const taxas = {
-  BRL: 1,
-  USD: 5.5,
-  EUR: 6.5,
-  GBP: 7.5,
+const taxasBrasil = {
+    BRL: 1,
+    USD: 0.2,
+    EUR: 0.18,
+    GBP: 0.16,
 };
-
+const taxasEstadosUnidos = {
+    BRL: 5.12,
+    USD: 1,
+    EUR: 0.93,
+    GBP: 0.8
+};
+const taxasEuropa = {
+    BRL: 5.47,
+    USD: 1.07,
+    EUR: 1,
+    GBP: 0.86
+};
+const taxasReinoUnido = {
+    BRL: 6.39,
+    USD: 1.25,
+    EUR: 1.17,
+    GBP: 1
+};
+const taxas = {
+    BRL: taxasBrasil,
+    USD: taxasEstadosUnidos,
+    EUR: taxasEuropa,
+    GBP: taxasReinoUnido
+};
 function assertIsMoedaValida(valor) {
-  if (
-    !valor ||
-    typeof valor !== 'string' ||
-    !moedasSuportadas.includes(valor)
-  ) {
-    window.alert('Moeda não suportada!');
+    if (!valor ||
+        typeof valor !== 'string' ||
+        !moedasSuportadas.includes(valor)) {
+        window.alert('Moeda não suportada!');
+        throw new Error();
+    }
+}
+const valoresOrigem = window
+    .prompt('Digite o valor de origem (Ex.: BRL 27.99): ')
+    ?.trim()
+    .split(' ');
+if (!valoresOrigem || valoresOrigem.length !== 2) {
+    window.alert('Valor inválido');
     throw new Error();
-  }
 }
-
-const moedaOrigem = window
-  .prompt('Digite o valor de origem (Ex.: BRL 27.99): ')
-  ?.trim()
-  .split(' ');
-
-if (!moedaOrigem || moedaOrigem.length !== 2) {
-  window.alert('Valor inválido');
-  throw new Error();
-}
-
-const [tipo, valorBruto] = moedaOrigem;
+const [moedaOrigem, valorBruto] = valoresOrigem;
 const valorDecimal = parseFloat(valorBruto);
-
-assertIsMoedaValida(tipo);
-
+assertIsMoedaValida(moedaOrigem);
 if (isNaN(valorDecimal)) {
-  window.alert('Valor inválido');
-  throw new Error();
+    window.alert('Valor inválido');
+    throw new Error();
 }
-
-const moedaDestino = window
-  .prompt('Digite a moeda de destino (Ex.: USD): ')
-  ?.trim();
-
+const moedaDestino = window.prompt('Digite a moeda de destino (Ex.: USD): ')?.trim();
 assertIsMoedaValida(moedaDestino);
-
-const valorConvertido = valorDecimal * taxas[moedaDestino];
+const valorConvertido = valorDecimal * taxas[moedaOrigem][moedaDestino];
 const valorFormatado = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: moedaDestino,
+    style: 'currency',
+    currency: moedaDestino,
 }).format(valorConvertido);
-
 window.alert(`Valor convertido: ${valorFormatado}`);
-
 export {};
