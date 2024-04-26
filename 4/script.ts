@@ -6,7 +6,7 @@ type TaxasRegiao = {
 };
 type Taxas = {
   [k in MoedasSuportadas]: TaxasRegiao;
-}
+};
 
 const taxasBrasil = {
   BRL: 1,
@@ -19,31 +19,33 @@ const taxasEstadosUnidos = {
   BRL: 5.12,
   USD: 1,
   EUR: 0.93,
-  GBP: 0.8
-} satisfies TaxasRegiao
+  GBP: 0.8,
+} satisfies TaxasRegiao;
 
 const taxasEuropa = {
   BRL: 5.47,
   USD: 1.07,
   EUR: 1,
-  GBP: 0.86
-} satisfies TaxasRegiao
+  GBP: 0.86,
+} satisfies TaxasRegiao;
 
 const taxasReinoUnido = {
   BRL: 6.39,
   USD: 1.25,
   EUR: 1.17,
-  GBP: 1
-} satisfies TaxasRegiao
+  GBP: 1,
+} satisfies TaxasRegiao;
 
 const taxas = {
   BRL: taxasBrasil,
   USD: taxasEstadosUnidos,
   EUR: taxasEuropa,
-  GBP: taxasReinoUnido
+  GBP: taxasReinoUnido,
 } satisfies Taxas;
 
-function assertIsMoedaValida(valor: unknown): asserts valor is MoedasSuportadas {
+function assertIsMoedaValida(
+  valor: unknown,
+): asserts valor is MoedasSuportadas {
   if (
     !valor ||
     typeof valor !== 'string' ||
@@ -74,7 +76,9 @@ if (isNaN(valorDecimal)) {
   throw new Error();
 }
 
-const moedaDestino = window.prompt('Digite a moeda de destino (Ex.: USD): ')?.trim();
+const moedaDestino = window
+  .prompt('Digite a moeda de destino (Ex.: USD): ')
+  ?.trim();
 
 assertIsMoedaValida(moedaDestino);
 

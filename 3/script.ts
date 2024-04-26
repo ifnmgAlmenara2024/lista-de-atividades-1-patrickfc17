@@ -1,5 +1,5 @@
 const temperatura = parseFloat(
-  window.prompt('Digite a temperatura em Celsius: ') as string
+  window.prompt('Digite a temperatura em Celsius: ') as string,
 );
 
 if (isNaN(temperatura)) {

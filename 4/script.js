@@ -9,25 +9,25 @@ const taxasEstadosUnidos = {
     BRL: 5.12,
     USD: 1,
     EUR: 0.93,
-    GBP: 0.8
+    GBP: 0.8,
 };
 const taxasEuropa = {
     BRL: 5.47,
     USD: 1.07,
     EUR: 1,
-    GBP: 0.86
+    GBP: 0.86,
 };
 const taxasReinoUnido = {
     BRL: 6.39,
     USD: 1.25,
     EUR: 1.17,
-    GBP: 1
+    GBP: 1,
 };
 const taxas = {
     BRL: taxasBrasil,
     USD: taxasEstadosUnidos,
     EUR: taxasEuropa,
-    GBP: taxasReinoUnido
+    GBP: taxasReinoUnido,
 };
 function assertIsMoedaValida(valor) {
     if (!valor ||
@@ -52,7 +52,9 @@ if (isNaN(valorDecimal)) {
     window.alert('Valor inválido');
     throw new Error();
 }
-const moedaDestino = window.prompt('Digite a moeda de destino (Ex.: USD): ')?.trim();
+const moedaDestino = window
+    .prompt('Digite a moeda de destino (Ex.: USD): ')
+    ?.trim();
 assertIsMoedaValida(moedaDestino);
 const valorConvertido = valorDecimal * taxas[moedaOrigem][moedaDestino];
 const valorFormatado = new Intl.NumberFormat('en-US', {
