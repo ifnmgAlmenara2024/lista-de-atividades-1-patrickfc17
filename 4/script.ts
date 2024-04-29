@@ -5,9 +5,9 @@ const moedasEnum = {
   GBP: 'en-GB',
 } as const;
 
-type MoedaSuportadas = keyof typeof moedasEnum;
+type MoedaSuportada = keyof typeof moedasEnum;
 type TaxasRegiao = {
-  [k in MoedaSuportadas]: number;
+  [k in MoedaSuportada]: number;
 };
 
 const taxasBrasil = {
@@ -23,7 +23,7 @@ const taxasParaBrasil = {
   GBP: 6.39,
 } satisfies Omit<TaxasRegiao, 'BRL'>;
 
-function assertIsMoedaValida(valor: unknown): asserts valor is MoedaSuportadas {
+function assertIsMoedaValida(valor: unknown): asserts valor is MoedaSuportada {
   if (
     !valor ||
     typeof valor !== 'string' ||
