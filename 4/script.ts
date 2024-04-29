@@ -35,6 +35,7 @@ function mainConversaoMoedas(): void {
   const valoresOrigem = window
     .prompt('Digite o valor de origem (Ex.: BRL 27.99): ')
     ?.trim()
+    .replace(',', '.')
     .split(' ');
 
   if (!valoresOrigem || valoresOrigem.length !== 2) {
