@@ -1,8 +1,13 @@
-const moedasSuportadas = ['BRL', 'USD', 'EUR', 'GBP'] as const;
+const moedasEnum = {
+  BRL: 'pt-BR',
+  USD: 'en-US',
+  EUR: 'de-DE',
+  GBP: 'en-GB',
+} as const;
 
-type MoedasSuportadas = (typeof moedasSuportadas)[number];
+type MoedaSuportadas = keyof typeof moedasEnum;
 type TaxasRegiao = {
-  [k in MoedasSuportadas]: number;
+  [k in MoedaSuportadas]: number;
 };
 
 const taxasBrasil = {
@@ -18,13 +23,11 @@ const taxasParaBrasil = {
   GBP: 6.39,
 } satisfies Omit<TaxasRegiao, 'BRL'>;
 
-function assertIsMoedaValida(
-  valor: unknown,
-): asserts valor is MoedasSuportadas {
+function assertIsMoedaValida(valor: unknown): asserts valor is MoedaSuportadas {
   if (
     !valor ||
     typeof valor !== 'string' ||
-    !(moedasSuportadas as ReadonlyArray<string>).includes(valor.toUpperCase())
+    !Object.keys(moedasEnum).includes(valor.toUpperCase())
   ) {
     window.alert('Moeda não suportada!');
     throw new Error();
@@ -68,12 +71,10 @@ function mainConversaoMoedas(): void {
   }
 
   const valorConvertido = valorDecimal * taxasBrasil[moedaDestino];
-  const valorFormatado = new Intl.NumberFormat('en-US', {
+  const valorFormatado = new Intl.NumberFormat(moedasEnum[moedaDestino], {
     style: 'currency',
     currency: moedaDestino,
   }).format(valorConvertido);
-
-  console.timeEnd('benchmark');
 
   window.alert(`Valor convertido: ${valorFormatado}`);
 }
