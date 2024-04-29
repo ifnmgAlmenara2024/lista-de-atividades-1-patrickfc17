@@ -8,10 +8,16 @@ function imcMessage(imc: number): string {
   return 'Obesidade grau 3 (mórbida)';
 }
 
-const peso = Number(window.prompt('Informe seu peso: '));
-const altura = Number(window.prompt('Informe sua altura: '));
+function mainImc(): void {
+  const peso = Number(window.prompt('Informe seu peso: '));
+  const altura = Number(window.prompt('Informe sua altura: '));
 
-const imc = peso / altura ** 2;
+  const imc = peso / altura ** 2;
 
-if (isNaN(imc)) window.alert('Valores inválidos');
-else window.alert(`IMC ${imc.toFixed(1)}: ${imcMessage(imc)}`);
+  if (isNaN(imc)) window.alert('Valores inválidos');
+  else window.alert(`IMC ${imc.toFixed(1)}: ${imcMessage(imc)}`);
+}
+
+document.body.onload = _ => {
+  while (true) mainImc();
+};

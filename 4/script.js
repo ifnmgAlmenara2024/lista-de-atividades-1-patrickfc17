@@ -1,65 +1,59 @@
+'use strict';
 const moedasSuportadas = ['BRL', 'USD', 'EUR', 'GBP'];
 const taxasBrasil = {
-    BRL: 1,
-    USD: 0.2,
-    EUR: 0.18,
-    GBP: 0.16,
+  BRL: 1,
+  USD: 0.2,
+  EUR: 0.18,
+  GBP: 0.16,
 };
-const taxasEstadosUnidos = {
-    BRL: 5.12,
-    USD: 1,
-    EUR: 0.93,
-    GBP: 0.8,
-};
-const taxasEuropa = {
-    BRL: 5.47,
-    USD: 1.07,
-    EUR: 1,
-    GBP: 0.86,
-};
-const taxasReinoUnido = {
-    BRL: 6.39,
-    USD: 1.25,
-    EUR: 1.17,
-    GBP: 1,
-};
-const taxas = {
-    BRL: taxasBrasil,
-    USD: taxasEstadosUnidos,
-    EUR: taxasEuropa,
-    GBP: taxasReinoUnido,
+const taxasParaBrasil = {
+  USD: 5.12,
+  EUR: 5.47,
+  GBP: 6.39,
 };
 function assertIsMoedaValida(valor) {
-    if (!valor ||
-        typeof valor !== 'string' ||
-        !moedasSuportadas.includes(valor)) {
-        window.alert('Moeda não suportada!');
-        throw new Error();
-    }
+  if (
+    !valor ||
+    typeof valor !== 'string' ||
+    !moedasSuportadas.includes(valor.toUpperCase())
+  ) {
+    window.alert('Moeda não suportada!');
+    throw new Error();
+  }
 }
-const valoresOrigem = window
+function mainConversaoMoedas() {
+  const valoresOrigem = window
     .prompt('Digite o valor de origem (Ex.: BRL 27.99): ')
     ?.trim()
     .split(' ');
-if (!valoresOrigem || valoresOrigem.length !== 2) {
+  if (!valoresOrigem || valoresOrigem.length !== 2) {
     window.alert('Valor inválido');
     throw new Error();
-}
-const [moedaOrigem, valorBruto] = valoresOrigem;
-const valorDecimal = parseFloat(valorBruto);
-assertIsMoedaValida(moedaOrigem);
-if (isNaN(valorDecimal)) {
+  }
+  let [moedaOrigem, valorBruto] = valoresOrigem;
+  let valorDecimal = parseFloat(valorBruto);
+  moedaOrigem = moedaOrigem?.toUpperCase();
+  assertIsMoedaValida(moedaOrigem);
+  if (isNaN(valorDecimal)) {
     window.alert('Valor inválido');
     throw new Error();
-}
-const moedaDestino = window
+  }
+  let moedaDestino = window
     .prompt('Digite a moeda de destino (Ex.: USD): ')
     ?.trim();
-assertIsMoedaValida(moedaDestino);
-const valorConvertido = valorDecimal * taxas[moedaOrigem][moedaDestino];
-const valorFormatado = new Intl.NumberFormat('en-US', {
+  moedaDestino = moedaDestino?.toUpperCase();
+  assertIsMoedaValida(moedaDestino);
+  if (moedaOrigem !== 'BRL') {
+    valorDecimal = valorDecimal * taxasParaBrasil[moedaOrigem];
+  }
+  const valorConvertido = valorDecimal * taxasBrasil[moedaDestino];
+  const valorFormatado = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: moedaDestino,
-}).format(valorConvertido);
-window.alert(`Valor convertido: ${valorFormatado}`);
-export {};
+  }).format(valorConvertido);
+  console.timeEnd('benchmark');
+  window.alert(`Valor convertido: ${valorFormatado}`);
+}
+document.body.onload = _ => {
+  while (true) mainConversaoMoedas();
+};
